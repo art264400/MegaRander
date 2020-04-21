@@ -12,17 +12,13 @@ namespace CalculateForMegaRender.Controllers
         {
             return View();
         }
-
-        public ActionResult About()
+        public ActionResult Multiplication()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
-
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult Multiplication(int[,] x,int[,] y)
         {
-            ViewBag.Message = "Your contact page.";
 
             return View();
         }
