@@ -1,0 +1,10 @@
+﻿
+@{
+    var myChart = new Chart(width: 600, height: 400)
+        .AddTitle("Chart Title")
+        .AddSeries(
+            name: "Employee",
+            xValue: new[] { "error1", "error2", "error3", "error4", "error5" },
+            yValues: new[] { "1010", "988", "756", "534", "342" })
+        .Write();
+}
