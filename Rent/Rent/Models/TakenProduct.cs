@@ -9,7 +9,7 @@ namespace Rent.Models
     {
         public int Id { get; set; }
         public DateTime DataTaken { get; set; }
-        public double DateReturn { get; set; }
+        public DateTime DateReturn { get; set; }
         public bool IsDeleted { get; set; }
         public bool LessorProof { get; set; }
         public bool TenantProof { get; set; }
@@ -18,7 +18,7 @@ namespace Rent.Models
         public string PhotoProduct { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
         public Product Product { get; set; }
     }
 }

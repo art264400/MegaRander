@@ -7,9 +7,10 @@ using Rent.Context;
 
 namespace Rent.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-           
+        
         public ActionResult Index()
         {
             //var db = new RentContext();
