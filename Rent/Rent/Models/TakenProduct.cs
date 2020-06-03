@@ -8,12 +8,12 @@ namespace Rent.Models
     public class TakenProduct
     {
         public int Id { get; set; }
-        public DateTime DataTaken { get; set; }
-        public DateTime DateReturn { get; set; }
+        public DateTime? DateTaken { get; set; }
+        public DateTime? DateReturn { get; set; }
         public bool IsDeleted { get; set; }
         public bool LessorProof { get; set; }
         public bool TenantProof { get; set; }
-        public bool LessorReturnProof { get; set; }
+        public bool LessonReturnProof { get; set; }
         public decimal Cost { get; set; }
         public string PhotoProduct { get; set; }
         public int UserId { get; set; }

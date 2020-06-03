@@ -12,7 +12,6 @@ namespace Rent.Models
         public string Discription { get; set; }
         public string PhotoUrl { get; set; }
         public decimal Price { get; set; }
-        public bool IsReserved { get; set; }
         public bool IsTaken { get; set; }
         public bool IsDeleted { get; set; }
 

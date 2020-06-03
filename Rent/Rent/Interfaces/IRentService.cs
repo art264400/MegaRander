@@ -24,6 +24,15 @@ namespace Rent.Interfaces
         Product[] GetAllProducts();
         Product GetProductById(int id);
         Product[] GetProductByUserId(int id);
-        bool CheckedReservedProductByProductId(int id);
+        bool CheckedIsTakenProductByProductId(int id);
+
+        //получение всех список заброинрованных моих вещей
+        TakenProduct[] GetAllTakenProductsByUserId(int userId);
+        //получить список, товаров, которые я взял в аренду
+        TakenProduct[] GetAllListMyTakenProduct(int userId);
+        bool CreateTakenProduct(TakenProduct takenProduct);
+        bool ChekedLessorProof(int idProof, int UserId); 
+        bool ChekedLessorReturnProof(int idProof, int UserId);
+        bool CheckedTenantProof(int idProof, int UserId);
     }
 }

@@ -85,7 +85,7 @@ namespace Rent.Services
             using (var db = new RentContext())
             {
                 return db.Products
-                    .Where(m => m.IsDeleted == false && m.IsReserved == false && m.IsTaken == false)
+                    .Where(m => m.IsDeleted == false && m.IsTaken == false)
                     .Include(m => m.Category)
                     .Include(m => m.User)
                     .ToArray();
@@ -97,7 +97,7 @@ namespace Rent.Services
             using (var db = new RentContext())
             {
                 var product = db.Products.Include(m => m.Category).Include(m => m.User).FirstOrDefault(m =>
-                        m.IsDeleted == false && m.IsReserved == false && m.IsTaken == false && m.Id == id);
+                        m.IsDeleted == false && m.IsTaken == false && m.Id == id);
                 return product;
             }
         }
@@ -116,16 +116,32 @@ namespace Rent.Services
             }
         }
 
-        public bool CheckedReservedProductByProductId(int id)
+        public bool CheckedIsTakenProductByProductId(int id)
         {
             using (var db = new RentContext())
             {
                 var product = db.Products.Include(m => m.User).FirstOrDefault(m => m.Id == id);
                 if (product == null) return false;
-                product.IsReserved = true;
+                product.IsTaken = true;
                 db.Products.AddOrUpdate(product);
                 db.SaveChanges();
                 return true;
+            }
+        }
+
+        public TakenProduct[] GetAllTakenProductsByUserId(int userId)
+        {
+            using (var db = new RentContext())
+            {
+                return db.TakenProducts.Include(m => m.User).Include(m => m.Product).Where(m=>m.IsDeleted==false&&m.Product.UserId==userId).ToArray();
+            }
+        }
+
+        public TakenProduct[] GetAllListMyTakenProduct(int userId)
+        {
+            using (var db = new RentContext())
+            {
+                return db.TakenProducts.Include(m => m.User).Include(m => m.Product).Where(m => m.IsDeleted == false && m.UserId == userId).ToArray();
             }
         }
 
@@ -134,6 +150,55 @@ namespace Rent.Services
             using (var db = new RentContext())
             {
                 return db.Products.Include(m => m.User).Include(m => m.Category).Where(m => m.UserId == id).ToArray();
+            }
+        }
+
+        public bool CreateTakenProduct(TakenProduct takenProduct)
+        {
+            using (var db = new RentContext())
+            {
+                db.TakenProducts.AddOrUpdate(takenProduct);
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool ChekedLessorProof(int idProof, int UserId)
+        {
+            using (var db = new RentContext())
+            {
+                var takenProduct = db.TakenProducts.Include(m=>m.Product).FirstOrDefault(m => m.Id == idProof&&m.Product.UserId==UserId&&m.IsDeleted==false);
+                if (takenProduct == null) return false;
+                takenProduct.LessorProof = true;
+                db.TakenProducts.AddOrUpdate(takenProduct);
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool ChekedLessorReturnProof(int idProof, int UserId)
+        {
+            using (var db = new RentContext())
+            {
+                var takenProduct = db.TakenProducts.Include(m => m.Product).FirstOrDefault(m => m.Id == idProof && m.Product.UserId == UserId && m.IsDeleted == false);
+                if (takenProduct == null) return false;
+                takenProduct.LessonReturnProof = true;
+                db.TakenProducts.AddOrUpdate(takenProduct);
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool CheckedTenantProof(int idProof, int UserId)
+        {
+            using (var db = new RentContext())
+            {
+                var takenProduct = db.TakenProducts.FirstOrDefault(m => m.Id == idProof && m.UserId == UserId && m.IsDeleted == false);
+                if (takenProduct == null) return false;
+                takenProduct.TenantProof = true;
+                db.TakenProducts.AddOrUpdate(takenProduct);
+                db.SaveChanges();
+                return true;
             }
         }
     }

@@ -235,6 +235,8 @@
     <Content Include="Views\Rent\Browse_item.cshtml" />
     <Content Include="Views\Rent\DetailProduct.cshtml" />
     <Content Include="Views\Rent\MyAd.cshtml" />
+    <Content Include="Views\Rent\RequestedAd.cshtml" />
+    <Content Include="Views\Rent\ListMyTakenProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
