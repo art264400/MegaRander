@@ -26,6 +26,7 @@ namespace Rent.Interfaces
         Product[] GetProductByUserId(int id);
         bool CheckedIsTakenProductByProductId(int id);
 
+        void DeleteTakenProductById(int id,int userId);
         //получение всех список заброинрованных моих вещей
         TakenProduct[] GetAllTakenProductsByUserId(int userId);
         //получить список, товаров, которые я взял в аренду
@@ -34,5 +35,7 @@ namespace Rent.Interfaces
         bool ChekedLessorProof(int idProof, int UserId); 
         bool ChekedLessorReturnProof(int idProof, int UserId);
         bool CheckedTenantProof(int idProof, int UserId);
+
+        Category[] GetAllGategories();
     }
 }

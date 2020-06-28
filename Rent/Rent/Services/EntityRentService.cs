@@ -133,7 +133,7 @@ namespace Rent.Services
         {
             using (var db = new RentContext())
             {
-                return db.TakenProducts.Include(m => m.User).Include(m => m.Product).Where(m=>m.IsDeleted==false&&m.Product.UserId==userId).ToArray();
+                return db.TakenProducts.Include(m => m.User).Include(m => m.Product).Where(m => m.IsDeleted == false && m.Product.UserId == userId).ToArray();
             }
         }
 
@@ -167,7 +167,7 @@ namespace Rent.Services
         {
             using (var db = new RentContext())
             {
-                var takenProduct = db.TakenProducts.Include(m=>m.Product).FirstOrDefault(m => m.Id == idProof&&m.Product.UserId==UserId&&m.IsDeleted==false);
+                var takenProduct = db.TakenProducts.Include(m => m.Product).FirstOrDefault(m => m.Id == idProof && m.Product.UserId == UserId && m.IsDeleted == false);
                 if (takenProduct == null) return false;
                 takenProduct.LessorProof = true;
                 db.TakenProducts.AddOrUpdate(takenProduct);
@@ -199,6 +199,25 @@ namespace Rent.Services
                 db.TakenProducts.AddOrUpdate(takenProduct);
                 db.SaveChanges();
                 return true;
+            }
+        }
+
+        public void DeleteTakenProductById(int id, int userId)
+        {
+            using (var db = new RentContext())
+            {
+                var takenProduct = db.TakenProducts.FirstOrDefault(m => m.Id == id && m.Product.UserId == userId);
+                takenProduct.IsDeleted = true;
+                db.TakenProducts.AddOrUpdate(takenProduct);
+                db.SaveChanges();
+            }
+        }
+
+        public Category[] GetAllGategories()
+        {
+            using (var db = new RentContext())
+            {
+                return db.Categories.Where(m => m.IsDeleted == false).ToArray();
             }
         }
     }

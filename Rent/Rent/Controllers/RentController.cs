@@ -8,7 +8,7 @@ using Rent.Models;
 
 namespace Rent.Controllers
 {
-    [Authorize]
+    
     public class RentController : Controller
     {
         public IRentService _rentService;
@@ -28,8 +28,20 @@ namespace Rent.Controllers
             var product = _rentService.GetProductById(id);
             return View(product);
         }
+        
+        public ActionResult CreateProduct()
+        {
+            SelectList category = new SelectList(_rentService.GetAllGategories(), "Id", "Name");
+            ViewBag.Category = category;
+            var product = new Product();
+            return View(product);
+        }
+        [HttpPost]
+        public ActionResult CreateProduct(Product product)
+        {
            
-
+            return View();
+        }
         public ActionResult RequestToRent(int id)
         {
             decimal money=0;
@@ -67,7 +79,9 @@ namespace Rent.Controllers
         public ActionResult ChekedLessorReturnProof(int idTakenProduct)
         {
             var userId = _rentService.GetUserByLogin(User.Identity.Name).Id;
-            _rentService.ChekedLessorReturnProof(idTakenProduct, userId); 
+            //помечаем что арендодатель подтвердил возврат товара
+            _rentService.ChekedLessorReturnProof(idTakenProduct, userId);
+            _rentService.DeleteTakenProductById(idTakenProduct,userId);
             return RedirectToAction("RequestedAd");
         }
         public ActionResult ListMyTakenProduct()
